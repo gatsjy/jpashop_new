@@ -19,11 +19,11 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private Long id;
 
-    @ManyToOne // 일대다중에 다에 포린키가 들어간다.
+    @ManyToOne(fetch = FetchType.LAZY) // 일대다중에 다에 포린키가 들어간다.
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 

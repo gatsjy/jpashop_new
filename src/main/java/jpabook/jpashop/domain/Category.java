@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 /**
  * Created by Gatsjy on 2020-10-11
  * Blog : https://blog.naver.com/gkswndks123
@@ -29,10 +31,16 @@ public class Category {
         inverseJoinColumns = @JoinColumn(name="item_id")) // 다대다를 풀어내는 중간테이블을 매핑해준다.
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="parent_id")
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+    // ==연관관계 메서드==/
+    public void addChildCategory(Category child){
+        this.child.add(child);
+        child.setParent(this);
+    }
 }

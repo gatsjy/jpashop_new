@@ -19,7 +19,7 @@ public class Delivery {
     @Column(name = "delivery_id")
     private Long id;
 
-    @OneToOne(mappedBy = "delivery") // 하나의 주문은 하나의 배송정보
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY) // 하나의 주문은 하나의 배송정보
     private Order order;
 
     @Embedded
