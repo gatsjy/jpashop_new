@@ -28,7 +28,7 @@ public class Category {
     @ManyToMany
     @JoinTable(name ="category_item",
         joinColumns = @JoinColumn(name="category_id"),
-        inverseJoinColumns = @JoinColumn(name="item_id")) // 다대다를 풀어내는 중간테이블을 매핑해준다.
+        inverseJoinColumns = @JoinColumn(name="item_id")) // 다대다를 풀어 내는 중간 테이블을 매핑
     private List<Item> items = new ArrayList<>();
 
     @ManyToOne(fetch = LAZY)

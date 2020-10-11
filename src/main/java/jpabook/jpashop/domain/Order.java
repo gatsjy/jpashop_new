@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name ="orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 public class Order {
 
@@ -26,7 +29,7 @@ public class Order {
     @JoinColumn(name = "member_id") // foreign key가 member_id 가 되는 것을 뜻함
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // cascade order를 persist하면 orderItem도 강제적으로 persist해준다.
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -75,7 +78,7 @@ public class Order {
      */
     public void cancel(){
         if(delivery.getStatus() == DeliveryStatus.COMP){
-            throw  new IllegalStateException("이미 배송완료된 상품은 취소가 불가능 합니다.");
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능 합니다.");
         }
         this.setStatus(OrderStatus.CANCEL);
         for (OrderItem orderItem : orderItems) {
