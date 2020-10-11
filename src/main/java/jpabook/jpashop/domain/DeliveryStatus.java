@@ -5,5 +5,6 @@ package jpabook.jpashop.domain;
  * Blog : https://blog.naver.com/gkswndks123
  * Github : https://github.com/gatsjy
  */
-public class Item {
+public enum DeliveryStatus {
+    READY, COMP
 }

@@ -1,5 +1,6 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class MemberRepositoryTest {
     public void testMember() throws Exception {
         //given
         Member member = new Member();
-        member.setUsername("memberA");
+        //member.setUsername("memberA");
 
         //when
         Long savedId = memberRepository.save(member);
@@ -36,7 +37,7 @@ public class MemberRepositoryTest {
 
         //then
         Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
-        Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
+        //Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
         Assertions.assertThat(findMember).isEqualTo(member);
         System.out.println("findMember == member"+ (findMember == member)); // 같은 영속성 컨텍스트 안에서는 아이디 값이 같으면 같은 엔티티로 인식한다.
     }
