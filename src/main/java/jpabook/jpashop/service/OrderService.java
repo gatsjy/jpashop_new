@@ -1,8 +1,8 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.Repository.ItemRepository;
-import jpabook.jpashop.Repository.MemberRepository;
-import jpabook.jpashop.Repository.OrderRepository;
+import jpabook.jpashop.repository.ItemRepository;
+import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.item.Item;
 import lombok.RequiredArgsConstructor;
