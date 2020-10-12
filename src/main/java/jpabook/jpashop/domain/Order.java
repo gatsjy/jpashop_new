@@ -80,6 +80,7 @@ public class Order {
         if(delivery.getStatus() == DeliveryStatus.COMP){
             throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능 합니다.");
         }
+        // <자바스터디> 이 값만 바꾸고 따로 update를 한것이 없는데 자동으로 값이 변경된다.
         this.setStatus(OrderStatus.CANCEL);
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel(); // 오더 아이템 마다 캔슬을 각각 날려 줘야 한다.

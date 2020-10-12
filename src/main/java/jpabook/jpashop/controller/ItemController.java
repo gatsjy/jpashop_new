@@ -75,15 +75,25 @@ public class ItemController {
      * 상품 수정
      */
     @PostMapping(value = "/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-        itemService.saveItem(book);
+    public String updateItem(@ModelAttribute("form") BookForm form, @PathVariable Long itemId) {
+
+        // 여기서 book은 준영속 엔티티이다.
+        // jpa가 관리를 하지 않는다.
+        // new로해서 만들었기 때문에..
+        
+        // 준영속 엔티티를 수정하는 2가지 방법
+        // - 변경감지기능 사용
+        // - 병함(merge) 사용
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+
+        // 필요한 데이터만 받아서 매칭해준다.
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
         return "redirect:/items";
     }
 }

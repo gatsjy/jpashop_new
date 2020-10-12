@@ -27,7 +27,7 @@ public class ItemRepository {
         if(item.getId() == null){
             em.persist(item); // 새로 저장 하는 로직
         }else{
-            em.merge(item); // 이미 등록된 것을 가져옴 (update 느낌)
+            em.merge(item); // 이미 등록된 것을 가져옴 (update 느낌) -> 데이터베이스에서 아이템을 찾는다. 그 다음에 파라미터로 넘어온 값으로 찾아온 것의 값을 바꿔치기 한다.
         }
     }
 

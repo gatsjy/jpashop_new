@@ -3,14 +3,13 @@ package jpabook.jpashop.service;
 import jpabook.jpashop.Repository.ItemRepository;
 import jpabook.jpashop.Repository.MemberRepository;
 import jpabook.jpashop.Repository.OrderRepository;
-import jpabook.jpashop.domain.Delivery;
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.item.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by Gatsjy on 2020-10-11
@@ -79,7 +78,7 @@ public class OrderService {
      * 주문 검색
      *  <자바스터디> 에서 발표할때 예전 하이버네이트에서 동적쿼리로 검색로직 짠거랑 JPA로 검색로직짠것을 비교하는 것이 필요 할 듯
      */
-/*    public List<Order> findOrders(OrderSearch orderSearch){
-        return orderRepository.findAll(orderSearch);
-    }*/
+    public List<Order> findOrders(OrderSearch ordersearch){
+        return orderRepository.findAllByString(ordersearch);
+    }
 }
