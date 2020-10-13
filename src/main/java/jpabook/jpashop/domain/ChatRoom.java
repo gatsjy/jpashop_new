@@ -19,7 +19,7 @@ import java.util.UUID;
  * Github : https://github.com/gatsjy
  */
 @Getter
-public class Chat {
+public class ChatRoom {
     // 채팅방은 id, name, session으로 구성된다. WebSocketSession은 spring에서 WebSocket Connection이 맺어진 세션을 가리킨다.
     // 해당 session을 통해서 메세지를 보낼 수 있다.
     private String id;
@@ -27,11 +27,11 @@ public class Chat {
     private Set<WebSocketSession> sessions = new HashSet<>();
 
     // 채팅방 생성
-    public static Chat create(@NonNull String name){
-        Chat chat = new Chat();
-        chat.id = UUID.randomUUID().toString();
-        chat.name = name;
-        return chat;
+    public static ChatRoom create(@NonNull String name){
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.id = UUID.randomUUID().toString();
+        chatRoom.name = name;
+        return chatRoom;
     }
 
     public void handleMessage(WebSocketSession session, ChatMessage chatMessage, ObjectMapper objectMapper){

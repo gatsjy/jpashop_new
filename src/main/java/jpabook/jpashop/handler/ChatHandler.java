@@ -1,9 +1,9 @@
 package jpabook.jpashop.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jpabook.jpashop.domain.Chat;
+import jpabook.jpashop.domain.ChatRoom;
 import jpabook.jpashop.domain.ChatMessage;
-import jpabook.jpashop.repository.ChatRepository;
+import jpabook.jpashop.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -26,7 +26,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @RequiredArgsConstructor
 public class ChatHandler extends TextWebSocketHandler {
     private final ObjectMapper obejctMapper;
-    private final ChatRepository chatRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     // session에서 메세지를 수신 했을 때 실행 된다.
     @Override
@@ -36,13 +36,13 @@ public class ChatHandler extends TextWebSocketHandler {
         log.info("payload : {}", payload);
 
         ChatMessage chatMessage = obejctMapper.readValue(payload, ChatMessage.class);
-        Chat chat = chatRepository.getChat(chatMessage.getChatRoomId());
+        ChatRoom chatRoom = chatRoomRepository.getChat(chatMessage.getChatRoomId());
 
         log.info("session : {}", session);
         log.info("message : {}", message);
         log.info("chatMessage : {}", chatMessage);
         log.info("objectMapper : {}", obejctMapper);
-        chat.handleMessage(session, chatMessage, obejctMapper);
+        chatRoom.handleMessage(session, chatMessage, obejctMapper);
     }
 
     @Override

@@ -1,13 +1,12 @@
 package jpabook.jpashop.controller;
 
-import jpabook.jpashop.domain.Chat;
-import jpabook.jpashop.repository.ChatRepository;
+import jpabook.jpashop.domain.ChatRoom;
+import jpabook.jpashop.repository.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,29 +18,28 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Github : https://github.com/gatsjy
  */
 @Controller
-@RequestMapping("/chat")
-public class ChatController {
+public class ChatRoomController {
 
-    private final ChatRepository chatRepository;
+    private final ChatRoomRepository chatRoomRepository;
     private final AtomicInteger seq = new AtomicInteger(0);
 
     @Autowired
-    public ChatController(ChatRepository chatRepository) {
-        this.chatRepository = chatRepository;
+    public ChatRoomController(ChatRoomRepository chatRoomRepository) {
+        this.chatRoomRepository = chatRoomRepository;
     }
 
-    @GetMapping("/rooms")
+    @GetMapping("/chats")
     public String rooms(Model model){
-        model.addAttribute("rooms", chatRepository.getChatRooms());
+        model.addAttribute("rooms", chatRoomRepository.getChatRooms());
         return "/chat/room-list";
     }
 
-    @GetMapping("/rooms/{id}")
+    @GetMapping("/chats/{id}")
     public String room(@PathVariable String id, Model model){
-        Chat chat = chatRepository.getChat(id);
-        model.addAttribute("room", chat);
+        ChatRoom chatRoom = chatRoomRepository.getChat(id);
+        model.addAttribute("room", chatRoom);
         model.addAttribute("member", "member" + seq.incrementAndGet());
 
-        return "/chat/room";
+        return "/chats/room";
     }
 }
