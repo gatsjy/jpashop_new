@@ -18,13 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
 
-    // final을 넣으면.. 컴파일 시점에 체크할 수 도 있다.
     private final MemberRepository memberRepository;
 
     /**
      * 회원 가입
-     * @param member
-     * @return
      */
     @Transactional(readOnly = false) // 우선 적으로 먹힘
     public Long join(Member member){
@@ -35,12 +32,11 @@ public class MemberService {
 
     /**
      * 중복 회원 인지 찾는 로직
-     * @param member
      */
     private void validationDuplicateMember(Member member) {
         List<Member> findMembers = memberRepository.findByName(member.getName());
         if(!findMembers.isEmpty()){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+            throw new IllegalStateException("이미 존재하는 회원 입니다.");
         }
     }
 
@@ -53,8 +49,6 @@ public class MemberService {
 
     /**
      * 한 건 조회
-     * @param memberId
-     * @return
      */
     public Member findOne(Long memberId){
         return memberRepository.findOne(memberId);

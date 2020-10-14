@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 /**
  * Created by Gatsjy on 2020-10-11
  * Blog : https://blog.naver.com/gkswndks123
@@ -26,6 +28,7 @@ import java.util.List;
  * 엔티티 설계시 주의점
  * 1. 모든 연관관계는 지연로딩으로 설정
  * - 즉시 로딩(EAGER)은 예측이 어렵고, 어떤 SQL이 추적하기가 힘들다.
+ * - "X"toOne 을 조심해야 한다. -> 기본 Fetch 전략이 EAGER이다
  */
 @Entity
 @Table(name ="orders")
@@ -41,15 +44,21 @@ public class Order {
     // 하나의 회원은 여러 주문을 가질 수 있다(다대일) -> ManyToOne
     // Order가 Member의 외래키를 가지고 있기 때문에 연관관계의 주인이라고 표현한다 -> 그러므로 Order.member을 ORDERS.MEMBER_ID 외래키와 매핑 한다.
     // 주인 쪽의 값을 변경해야지 member의 값도 변경된다.
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id") // foreign key가 member_id 가 되는 것을 뜻함
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // cascade order를 persist하면 orderItem도 강제적으로 persist해준다.
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // order를 persist하면 orderItem도 강제적으로 persist해준다.
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    // persist(orderItemA)
+    // persist(orderItemB)
+    // persist(orderItemC)
+    // persist(order)
+    // 각각 해줘야하지만 cascade를 걸면 전부 persist를 해준다. delete할때도 같이 지워준다.
+
     // 연관관계의 주인은 JoinColumn을 잡아준다.
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -58,8 +67,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문상태 [ORDER, CANCEL]
 
-    //==연관관계 메서드==//
-    // 양 방향을 때 원자적으로 하나의 코드로 처리
+    //==연관관계편의 메서드(양뱡향일때 사용하는 메서드)==//
+    // 양 방향을 때 원자적으로 하나로 묶는 처리
     public void setMember(Member member){
         this.member = member;
         member.getOrders().add(this);
@@ -70,7 +79,7 @@ public class Order {
         orderItem.setOrder(this);
     }
 
-    public void serDelivery(Delivery delivery){
+    public void setDelivery(Delivery delivery){
         this.delivery = delivery;
         delivery.setOrder(this);
     }

@@ -48,7 +48,7 @@ public class OrderService {
 
         // 주문 상품을 생성
         // 생성로직을 일원화 하는 것이 중요하다. -> 어떻게 막을까? (proteced로 만든다 생성자를)
-        // 좋은 설계와 유지보수는 제약하는 스타일로 내가 원하는 방식을 이끌어 내는 코딩을 해야한다.
+        // 좋은 설계와 유지보수는 제약하는 스타일로 내가 원하는 방식을 이끌어 내는 코딩을 해야 한다.
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
         // 주문을 생성
@@ -71,6 +71,7 @@ public class OrderService {
         // <자바스터디>
         // 여기서 JPA의 강점이 나온다. 아이템 재고 올리는 것을 UPDATE로직을 또 짜야한다는 것이다. -> SQL을 직접 짤 수 밖에 없다는 것이다.
         // 더티체킹(변경내역감지)를 통해서 아이템의 UPDATE를 변경해준다.
+        // 주문을 취소한다고 생각해보자 그러면 일단 주문내역 취소하고, 그 주문에 딸린 상품내역 각각 타고 들어가서 전부 원복시켜줘야 한다.
         order.cancel();
     }
 

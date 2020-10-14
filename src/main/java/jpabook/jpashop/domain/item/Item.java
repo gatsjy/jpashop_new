@@ -37,6 +37,7 @@ public abstract class Item {
     // setter를 넣는 것이 아니라. 엔티티 안의 필요한 비즈니스 로직을 통해 데이터를 변경해야 한다.
     /**
      * stock 증가
+     * <자바스터디> 현업에서는 이 부분 어떻게 구현할까? 트리거로 구현하나? </자바스터디>
      */
     public void addStock(int quantity){
         this.stockQuantity += quantity;
