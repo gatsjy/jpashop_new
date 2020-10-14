@@ -34,7 +34,7 @@ public class ChatRoomRepository {
         chatRooms = Collections.unmodifiableCollection(chatMap.values());
     }
 
-    public ChatRoom getChat(String id){
+    public ChatRoom getChatRoom(String id){
         return chatMap.get(id);
     }
 

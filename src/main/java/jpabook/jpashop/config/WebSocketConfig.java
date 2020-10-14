@@ -26,6 +26,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         // 해당 endPoint로 handShake가 이루어진다.
-        registry.addHandler(chatHandler, "/ws/chat").setAllowedOrigins("*").withSockJS();
+        registry.addHandler(chatHandler, "/ws/chatRoom").setAllowedOrigins("*").withSockJS();
     }
 }

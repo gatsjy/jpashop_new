@@ -5,18 +5,34 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <h1>채팅방 목록</h1>
-    <ul>
+
+   <!-- <ul>
         <tr th:each="rooms : ${rooms}">
             <td>
-                <a href="#" th:href="@{/chatRoom/rooms/{{id}}"></a>
+                <a href="#" th:href="@{/chatRoom/rooms/{id} (id=${rooms.id})}"></a>
             </td>
         </tr>
-<!--        {{#rooms}}
-        <li><a href="/chatRoom/rooms/{{id}}">{{name}}</a></li>
-        {{/rooms}}-->
-    </ul>
-    <br/>
+    </ul>-->
+    <h1>채팅방 목록</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>UUID</th>
+            <th>방이름</th>
+            <th>입장</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rooms : ${rooms}">
+            <td th:text="${rooms.id}"></td>
+            <td th:text="${rooms.name}"></td>
+            <td>
+                <a href="#" th:href="@{/chat/rooms/{id} (id=${rooms.id})}"
+                   class="btn btn-primary" role="button">입장</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
