@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Gatsjy
  * @since 2020-10-03
+ * 다음 예제는 https://supawer0728.github.io/2018/03/30/spring-websocket/ 참고하여 만들었습니다.
  */
 @RequestMapping("/chat")
 @Controller
@@ -22,7 +23,7 @@ public class ChatRoomController {
     private final ChatRoomRepository chatRoomRepository;
     // AtomicInteger란 원자성을 보장하는 Integer를 의미한다.
     // 멀티쓰레드환경에서 동기화 문제를 별도의 synchronized 키워드 없이 해결하기 위해서 고안된 방법이다.
-    // 현재 쓰레드에 저장된 값과 메싱ㄴ 메모리에 저장된 값을 비교하여 일치하는 경우 새로운 값으로 교체하고, 일치 하지 않는 다면 실패하고 재시도를 한다.
+    // 현재 쓰레드에 저장된 값과 메모리에 저장된 값을 비교하여 일치하는 경우 새로운 값으로 교체하고, 일치 하지 않는 다면 실패하고 재시도를 한다.
     private final AtomicInteger seq = new AtomicInteger(0);
 
     @Autowired

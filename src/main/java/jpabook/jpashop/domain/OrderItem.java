@@ -24,10 +24,16 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private Long id;
 
+    // <자바스터디>
+    // 단방향 관계이다 (OrderItem에서는 Item으로 접근할 수 있는데, Item에서는 OrderItem으로 접근할 수 없다.)
+    // 아이템을 볼때 나를 주문한 OrderItem을 찾을 필요가 없다. (반대로 오더아이템 중에 어떤 아이템인지는 확인할 필요가 있다.)
     @ManyToOne(fetch = LAZY) // 일대다중에 다에 포린키가 들어간다.
     @JoinColumn(name = "item_id")
     private Item item;
 
+    // <자바스터디>
+    // 한번주문할때 여러개의 아이템을 주문하므로...
+    // 연관관계의 주인이다. 그러므로 OderItem.order을 ORDER_ITEM.ORDER_ID 외래키에 매핑한다.
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
     private Order order;

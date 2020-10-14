@@ -14,6 +14,18 @@ import java.util.List;
  * Created by Gatsjy on 2020-10-11
  * Blog : https://blog.naver.com/gkswndks123
  * Github : https://github.com/gatsjy
+ * 참고 : 외래키가 있는 곳을 연관관계의 주인으로 정해라
+ * 연관 관계의 주인은 단순히 외래키를 누가 관리하느냐의 문제지 비즈니스상 우위에 있다고 주인으로 정하면 안된다.
+ * 예를 들어서 자동차와 바퀴가 있으면, 일대다 관계에서 항상 다쪽에 외래키가 있으므로 외래 키가 있는 바퀴를 연관관계의 주인으로 정하면 된다.
+ *
+ * 참고 : 엔티티 클래스 개발
+ * 이론적으로 Getter Setter 모두 제공하지 않고, 꼭 필요한 별도의 메서드를 제공하는게 가장 이상적이다.
+ * 하지만 실무에서 엔티티의 데이터는 조회할 일이 너무 많으므로, Getter는 열어두는 것이 편리하다.
+ * Setter를 막 열어두면 가까운미래에 엔티티가 도대체 왜 변경되었는지 추적하기 점점 힘들어진다.
+ * 
+ * 엔티티 설계시 주의점
+ * 1. 모든 연관관계는 지연로딩으로 설정
+ * - 즉시 로딩(EAGER)은 예측이 어렵고, 어떤 SQL이 추적하기가 힘들다.
  */
 @Entity
 @Table(name ="orders")
@@ -22,9 +34,13 @@ import java.util.List;
 public class Order {
 
     @Id @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "order_id")
     private Long id;
 
+    // <자바스터디>
+    // 하나의 회원은 여러 주문을 가질 수 있다(다대일) -> ManyToOne
+    // Order가 Member의 외래키를 가지고 있기 때문에 연관관계의 주인이라고 표현한다 -> 그러므로 Order.member을 ORDERS.MEMBER_ID 외래키와 매핑 한다.
+    // 주인 쪽의 값을 변경해야지 member의 값도 변경된다.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // foreign key가 member_id 가 되는 것을 뜻함
     private Member member;
@@ -32,6 +48,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // cascade order를 persist하면 orderItem도 강제적으로 persist해준다.
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    // 연관관계의 주인은 JoinColumn을 잡아준다.
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;

@@ -33,9 +33,6 @@ public class OrderRepository {
     }
 
     public List<Order> findAll(OrderSearch orderSearch){
-        // JPQL로 만든다 --> 동적 쿼리를 어떻게 해결해야 하는지.. 마이바티스는 xml로 해결할 수 있다.
-        // <자바스터디>
-
         return em.createQuery("select o from Order o join o.member m" +
                         " where o.status = :status" +
                         " and m.name like :name", Order.class)
@@ -44,8 +41,11 @@ public class OrderRepository {
                         //.setMaxResults(1000)
                         .getResultList();
     }
-
     // 1. JPAQL로 마이바티스처럼 동적 쿼리를 구성할 경우
+    // <자바스터디>
+    // JPQL로 만든다 --> 동적 쿼리를 어떻게 해결해야 하는지.. 마이바티스는 xml로 해결할 수 있다.
+    // 동적 쿼리를 만드는 문제 (MyBatis를 사용하면 간단하게 if문으로 해결 가능하다. 하지만 JPA를 사용하면 아래와 같이 길게 표현해야함
+    // -> 위의 문제점을 해결하기 위해 sqldl?이라는 것이 있다는데... 아직 공부하지는 못함
     public List<Order> findAllByString(OrderSearch orderSearch) {
         //language=JPAQL
         String jpql = "select o From Order o join o.member m";
