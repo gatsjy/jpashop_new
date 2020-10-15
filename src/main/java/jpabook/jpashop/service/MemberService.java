@@ -53,4 +53,14 @@ public class MemberService {
     public Member findOne(Long memberId){
         return memberRepository.findOne(memberId);
     }
+
+    /**
+     * 회원 업데이트
+     * 커멘드와 쿼리를 철저하게 분리하는 마인드가 필요하다.
+     */
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);
+        member.setName(name);
+    }
 }
