@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class OrderItem {
     // <자바스터디>
     // 한번주문할때 여러개의 아이템을 주문하므로...
     // 연관관계의 주인이다. 그러므로 OderItem.order을 ORDER_ITEM.ORDER_ID 외래키에 매핑한다.
+    @JsonIgnore
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
